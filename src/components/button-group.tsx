@@ -1,3 +1,4 @@
+import { useExtensionContext } from "../context/extension-context";
 import type { ButtonFilters } from "../lib/types";
 
 const buttons: { label: string; value: ButtonFilters }[] = [
@@ -6,20 +7,14 @@ const buttons: { label: string; value: ButtonFilters }[] = [
   { label: "Inactive", value: "inactive" },
 ];
 
-type ButtonGroupProps = {
-  onFilterChange: (filter: ButtonFilters) => void;
-  activeFilter: ButtonFilters;
-};
 
-export default function ButtonGroup({
-  onFilterChange,
-  activeFilter,
-}: ButtonGroupProps) {
+export default function ButtonGroup() {
+  const {handleFilterChange, activeFilter} = useExtensionContext()
   return (
     <div className="space-x-3">
       {buttons.map((button) => (
         <button
-          onClick={() => onFilterChange(button.value)}
+          onClick={() => handleFilterChange(button.value)}
           key={button.value}
           className={
             activeFilter === button.value

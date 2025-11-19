@@ -1,13 +1,8 @@
-import type { Extension } from "../lib/types";
+import { useExtensionContext } from "../context/extension-context";
 import SwitchButton from "./switch-button";
 
-type ExtensionsCardProps = {
-  extensions: Extension[],
-  onDeleteExtension: (id: Extension["id"]) => void
-  onToggleExtension: (id: Extension["id"]) => void
-};
-
-export default function ExtensionCard({ extensions, onDeleteExtension, onToggleExtension }: ExtensionsCardProps) {
+export default function ExtensionCard() {
+    const {extensions, handleDeleteExtension, handleToggleExtension} = useExtensionContext()
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-3">
       {extensions.map((extension) => (
@@ -29,10 +24,10 @@ export default function ExtensionCard({ extensions, onDeleteExtension, onToggleE
           </div>
           {/* card footer */}
           <div className="flex items-center justify-between">
-            <button onClick={() => onDeleteExtension(extension.id)} className="border border-neu  dark:border-neutral-600 rounded-full py-2 px-4 cursor-pointer hover:text-neutral-0 hover:bg-red-700 dark:hover:text-neutral-900 dark:hover:bg-red-400 hover:border-transparent duration-300">
+            <button onClick={() => handleDeleteExtension(extension.id)} className="border border-neu  dark:border-neutral-600 rounded-full py-2 px-4 cursor-pointer hover:text-neutral-0 hover:bg-red-700 dark:hover:text-neutral-900 dark:hover:bg-red-400 hover:border-transparent duration-300">
               Remove
             </button>
-            <SwitchButton checked={extension.isActive} onChange={() => onToggleExtension(extension.id)} />
+            <SwitchButton checked={extension.isActive} onChange={() => handleToggleExtension(extension.id)} />
           </div>
         </article>
       ))}
